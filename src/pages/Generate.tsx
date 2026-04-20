@@ -93,7 +93,7 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: "sw", label: "SW" },
 ];
 
-const Index = () => {
+const Generate = () => {
   const [lang, setLang] = useState<Lang>("fr");
   const t = translations[lang];
   const { theme, toggle: toggleTheme } = useTheme();
