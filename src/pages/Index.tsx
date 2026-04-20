@@ -105,16 +105,16 @@ const Index = () => {
       <div className="absolute top-0 -left-40 w-96 h-96 bg-brand/20 rounded-full blur-3xl" />
       <div className="absolute bottom-0 -right-40 w-96 h-96 bg-brand-glow/20 rounded-full blur-3xl" />
 
-      <div className="container relative max-w-5xl py-8 md:py-12">
-        <header className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border shadow-sm mb-6">
+      <div className="container relative max-w-5xl py-6 md:py-10">
+        <header className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border shadow-sm mb-4">
             <Sparkles className="w-4 h-4 text-brand" />
             <span className="text-sm font-medium">Générateur de QR Code</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
             Créez votre <span className="bg-[var(--gradient-brand)] bg-clip-text text-transparent">QR Code</span>
           </h1>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
             Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.
           </p>
         </header>
