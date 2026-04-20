@@ -105,8 +105,8 @@ const Index = () => {
       <div className="absolute top-0 -left-40 w-96 h-96 bg-brand/20 rounded-full blur-3xl" />
       <div className="absolute bottom-0 -right-40 w-96 h-96 bg-brand-glow/20 rounded-full blur-3xl" />
 
-      <div className="container relative max-w-5xl py-12 md:py-20">
-        <header className="text-center mb-12">
+      <div className="container relative max-w-5xl py-8 md:py-12">
+        <header className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border shadow-sm mb-6">
             <Sparkles className="w-4 h-4 text-brand" />
             <span className="text-sm font-medium">Générateur de QR Code</span>
