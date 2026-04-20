@@ -33,6 +33,8 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Erreur lors de la génération",
     success: "QR code généré !",
     language: "Langue",
+    installLabel: "Installer MY QRCODER sur votre appareil",
+    installCta: "Installer",
   },
   en: {
     badge: "QR Code Generator",
@@ -55,6 +57,8 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Error while generating",
     success: "QR code generated!",
     language: "Language",
+    installLabel: "Install MY QRCODER on your device",
+    installCta: "Install",
   },
   sw: {
     badge: "Kitengeneza QR Code",
@@ -77,6 +81,8 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Hitilafu wakati wa kutengeneza",
     success: "QR code imetengenezwa!",
     language: "Lugha",
+    installLabel: "Sakinisha MY QRCODER kwenye kifaa chako",
+    installCta: "Sakinisha",
   },
 };
 
@@ -316,6 +322,7 @@ const Index = () => {
           </Card>
         </div>
       </div>
+      <InstallPrompt label={t.installLabel} cta={t.installCta} />
     </main>
   );
 };
