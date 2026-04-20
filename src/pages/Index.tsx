@@ -195,7 +195,8 @@ const Index = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full h-12 text-base bg-[var(--gradient-brand)] hover:opacity-90 transition-opacity shadow-[var(--shadow-glow)] text-brand-foreground border-0"
+                style={{ backgroundImage: "var(--gradient-brand)", boxShadow: "var(--shadow-glow)" }}
+                className="w-full h-12 text-base hover:opacity-90 transition-opacity text-brand-foreground border-0"
               >
                 {loading ? "Génération..." : "Générer le QR Code"}
               </Button>
