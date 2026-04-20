@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Download, Link2, Image as ImageIcon, Sparkles, Upload, X, QrCode } from "lucide-react";
-import appLogo from "@/assets/logo.png";
+import { Download, Link2, Image as ImageIcon, Sparkles, Upload, X, QrCode, Moon, Sun } from "lucide-react";
+import { InstallPrompt } from "@/components/InstallPrompt";
+import { useTheme } from "@/hooks/useTheme";
 
 type Lang = "fr" | "en" | "sw";
 
