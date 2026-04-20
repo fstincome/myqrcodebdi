@@ -63,10 +63,17 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 47% 8%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --brand: 221 89% 60%;
+    --brand-foreground: 0 0% 100%;
+    --brand-glow: 221 89% 60%;
+
+    --shadow-glow: 0 10px 30px -10px hsl(221 89% 60% / 0.5);
+    --shadow-card: 0 10px 40px -10px hsl(0 0% 0% / 0.4);
+
+    --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
