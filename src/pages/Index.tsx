@@ -121,7 +121,13 @@ const Index = () => {
 
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/80">
-            <div className="space-y-6">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                generateQR();
+              }}
+              className="space-y-6"
+            >
               <div className="space-y-2">
                 <Label htmlFor="url" className="flex items-center gap-2">
                   <Link2 className="w-4 h-4" /> Lien <span className="text-destructive">*</span>
