@@ -10,8 +10,6 @@ import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 
-const Generate = () => {
-
 type Lang = "fr" | "en" | "sw";
 
 const translations: Record<Lang, Record<string, string>> = {
