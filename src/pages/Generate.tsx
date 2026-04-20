@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import QRCode from "qrcode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun } from "lucide-react";
+import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun, ArrowLeft } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -92,7 +93,7 @@ const LANGS: { code: Lang; label: string }[] = [
   { code: "sw", label: "SW" },
 ];
 
-const Index = () => {
+const Generate = () => {
   const [lang, setLang] = useState<Lang>("fr");
   const t = translations[lang];
   const { theme, toggle: toggleTheme } = useTheme();
@@ -191,7 +192,11 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <div className="container relative max-w-5xl py-6 md:py-10">
         {/* Top bar */}
-        <div className="flex items-center justify-end gap-2 mb-6">
+        <div className="flex items-center justify-between gap-2 mb-6">
+          <Button asChild variant="ghost" size="sm" className="rounded-full">
+            <Link to="/"><ArrowLeft className="w-4 h-4 mr-1" /> Home</Link>
+          </Button>
+          <div className="flex items-center gap-2">
           <Button
             onClick={toggleTheme}
             variant="outline"
@@ -213,6 +218,7 @@ const Index = () => {
                 {l.label}
               </button>
             ))}
+          </div>
           </div>
         </div>
 
@@ -327,4 +333,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Generate;
