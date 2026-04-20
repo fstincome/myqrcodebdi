@@ -121,7 +121,13 @@ const Index = () => {
 
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/80">
-            <div className="space-y-6">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                generateQR();
+              }}
+              className="space-y-6"
+            >
               <div className="space-y-2">
                 <Label htmlFor="url" className="flex items-center gap-2">
                   <Link2 className="w-4 h-4" /> Lien <span className="text-destructive">*</span>
@@ -181,13 +187,13 @@ const Index = () => {
               </div>
 
               <Button
-                onClick={generateQR}
+                type="submit"
                 disabled={loading}
                 className="w-full h-12 text-base bg-[var(--gradient-brand)] hover:opacity-90 transition-opacity shadow-[var(--shadow-glow)] text-brand-foreground border-0"
               >
                 {loading ? "Génération..." : "Générer le QR Code"}
               </Button>
-            </div>
+            </form>
           </Card>
 
           <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/80 flex flex-col items-center justify-center min-h-[400px]">
