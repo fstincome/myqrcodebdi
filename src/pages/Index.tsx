@@ -112,7 +112,13 @@ const Index = () => {
             <span className="text-sm font-medium">Générateur de QR Code</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-            Créez votre <span className="bg-[var(--gradient-brand)] bg-clip-text text-transparent">QR Code</span>
+            Créez votre{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "var(--gradient-brand)" }}
+            >
+              QR Code
+            </span>
           </h1>
           <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
             Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.
