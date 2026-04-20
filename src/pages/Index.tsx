@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Download, Link2, Image as ImageIcon, Sparkles, Upload, X, QrCode, Moon, Sun } from "lucide-react";
+import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -248,7 +248,7 @@ const Index = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="caption" className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> {t.caption}
+                  <Type className="w-4 h-4" /> {t.caption}
                 </Label>
                 <Input
                   id="caption"
