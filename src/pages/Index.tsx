@@ -1,26 +1,106 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import QRCode from "qrcode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Download, Link2, Image as ImageIcon, Sparkles, Upload, X } from "lucide-react";
+import { Download, Link2, Image as ImageIcon, Sparkles, Upload, X, QrCode } from "lucide-react";
+import appLogo from "@/assets/logo.png";
+
+type Lang = "fr" | "en" | "sw";
+
+const translations: Record<Lang, Record<string, string>> = {
+  fr: {
+    badge: "Générateur de QR Code",
+    title1: "Créez votre",
+    title2: "QR Code",
+    subtitle: "Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.",
+    link: "Lien",
+    linkPlaceholder: "https://exemple.com",
+    caption: "Légende (optionnel)",
+    captionPlaceholder: "Mon site web",
+    logo: "Logo (optionnel)",
+    logoReady: "Logo prêt",
+    addLogo: "Cliquez pour ajouter",
+    submit: "Générer le QR Code",
+    loading: "Génération...",
+    download: "Télécharger PNG",
+    placeholder: "Votre QR code apparaîtra ici",
+    errEmpty: "Veuillez entrer un lien",
+    errImage: "Veuillez sélectionner une image",
+    errGen: "Erreur lors de la génération",
+    success: "QR code généré !",
+    language: "Langue",
+  },
+  en: {
+    badge: "QR Code Generator",
+    title1: "Create your",
+    title2: "QR Code",
+    subtitle: "Turn any link into a custom QR code with your logo and a caption.",
+    link: "Link",
+    linkPlaceholder: "https://example.com",
+    caption: "Caption (optional)",
+    captionPlaceholder: "My website",
+    logo: "Logo (optional)",
+    logoReady: "Logo ready",
+    addLogo: "Click to add",
+    submit: "Generate QR Code",
+    loading: "Generating...",
+    download: "Download PNG",
+    placeholder: "Your QR code will appear here",
+    errEmpty: "Please enter a link",
+    errImage: "Please select an image",
+    errGen: "Error while generating",
+    success: "QR code generated!",
+    language: "Language",
+  },
+  sw: {
+    badge: "Kitengeneza QR Code",
+    title1: "Tengeneza",
+    title2: "QR Code yako",
+    subtitle: "Geuza kiungo chochote kuwa QR code maalum na nembo yako na maelezo mafupi.",
+    link: "Kiungo",
+    linkPlaceholder: "https://mfano.com",
+    caption: "Maelezo (si lazima)",
+    captionPlaceholder: "Tovuti yangu",
+    logo: "Nembo (si lazima)",
+    logoReady: "Nembo iko tayari",
+    addLogo: "Bonyeza kuongeza",
+    submit: "Tengeneza QR Code",
+    loading: "Inatengeneza...",
+    download: "Pakua PNG",
+    placeholder: "QR code yako itaonekana hapa",
+    errEmpty: "Tafadhali ingiza kiungo",
+    errImage: "Tafadhali chagua picha",
+    errGen: "Hitilafu wakati wa kutengeneza",
+    success: "QR code imetengenezwa!",
+    language: "Lugha",
+  },
+};
+
+const LANGS: { code: Lang; label: string }[] = [
+  { code: "fr", label: "FR" },
+  { code: "en", label: "EN" },
+  { code: "sw", label: "SW" },
+];
 
 const Index = () => {
+  const [lang, setLang] = useState<Lang>("fr");
+  const t = translations[lang];
+
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      toast.error("Veuillez sélectionner une image");
+      toast.error(t.errImage);
       return;
     }
     const reader = new FileReader();
@@ -30,7 +110,7 @@ const Index = () => {
 
   const generateQR = async () => {
     if (!url.trim()) {
-      toast.error("Veuillez entrer un lien");
+      toast.error(t.errEmpty);
       return;
     }
     setLoading(true);
@@ -51,7 +131,7 @@ const Index = () => {
         width: size,
         margin: 1,
         errorCorrectionLevel: "H",
-        color: { dark: "#0f0a1f", light: "#ffffff" },
+        color: { dark: "#1877F2", light: "#ffffff" },
       });
       ctx.drawImage(qrCanvas, padding, padding, size, size);
 
@@ -76,16 +156,16 @@ const Index = () => {
       }
 
       if (caption.trim()) {
-        ctx.fillStyle = "#0f0a1f";
+        ctx.fillStyle = "#0f172a";
         ctx.font = "600 24px system-ui, -apple-system, sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(caption, canvas.width / 2, size + padding * 2 + 24);
       }
 
       setQrDataUrl(canvas.toDataURL("image/png"));
-      toast.success("QR code généré !");
+      toast.success(t.success);
     } catch (err) {
-      toast.error("Erreur lors de la génération");
+      toast.error(t.errGen);
     } finally {
       setLoading(false);
     }
@@ -100,48 +180,57 @@ const Index = () => {
   };
 
   return (
-    <main className="min-h-screen bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-[var(--gradient-soft)] opacity-60" />
-      <div className="absolute top-0 -left-40 w-96 h-96 bg-brand/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 -right-40 w-96 h-96 bg-brand-glow/20 rounded-full blur-3xl" />
-
+    <main className="min-h-screen bg-background">
       <div className="container relative max-w-5xl py-6 md:py-10">
+        {/* Top bar */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2">
+            <img src={appLogo} alt="MY QRCODER" className="w-9 h-9 rounded-lg object-cover" />
+            <span className="font-bold text-lg tracking-tight">MY QRCODER</span>
+          </div>
+          <div className="inline-flex rounded-full border bg-card p-1 shadow-sm" role="group" aria-label={t.language}>
+            {LANGS.map((l) => (
+              <button
+                key={l.code}
+                onClick={() => setLang(l.code)}
+                className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors ${
+                  lang === l.code ? "bg-brand text-brand-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <header className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border shadow-sm mb-4">
             <Sparkles className="w-4 h-4 text-brand" />
-            <span className="text-sm font-medium">Générateur de QR Code</span>
+            <span className="text-sm font-medium">{t.badge}</span>
           </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-            Créez votre{" "}
-            <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "var(--gradient-brand)" }}
-            >
-              QR Code
-            </span>
+            {t.title1} <span className="text-brand">{t.title2}</span>
           </h1>
-          <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
-            Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.
-          </p>
+          <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">{t.subtitle}</p>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/80">
+          <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 generateQR();
               }}
-              className="space-y-6"
+              className="space-y-5"
             >
               <div className="space-y-2">
                 <Label htmlFor="url" className="flex items-center gap-2">
-                  <Link2 className="w-4 h-4" /> Lien <span className="text-destructive">*</span>
+                  <Link2 className="w-4 h-4" /> {t.link} <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="url"
                   type="url"
-                  placeholder="https://exemple.com"
+                  placeholder={t.linkPlaceholder}
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   className="h-12"
@@ -150,11 +239,11 @@ const Index = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="caption" className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> Légende (optionnel)
+                  <Sparkles className="w-4 h-4" /> {t.caption}
                 </Label>
                 <Input
                   id="caption"
-                  placeholder="Mon site web"
+                  placeholder={t.captionPlaceholder}
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   className="h-12"
@@ -163,7 +252,7 @@ const Index = () => {
 
               <div className="space-y-2">
                 <Label className="flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4" /> Logo (optionnel)
+                  <ImageIcon className="w-4 h-4" /> {t.logo}
                 </Label>
                 <input
                   ref={fileInputRef}
@@ -175,8 +264,8 @@ const Index = () => {
                 {logo ? (
                   <div className="flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
                     <img src={logo} alt="Logo" className="w-12 h-12 rounded object-cover" />
-                    <span className="text-sm text-muted-foreground flex-1">Logo prêt</span>
-                    <Button variant="ghost" size="icon" onClick={() => setLogo(null)}>
+                    <span className="text-sm text-muted-foreground flex-1">{t.logoReady}</span>
+                    <Button type="button" variant="ghost" size="icon" onClick={() => setLogo(null)}>
                       <X className="w-4 h-4" />
                     </Button>
                   </div>
@@ -184,10 +273,10 @@ const Index = () => {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full h-24 rounded-lg border-2 border-dashed border-border hover:border-brand hover:bg-brand/5 transition-colors flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-brand"
+                    className="w-full h-20 rounded-lg border-2 border-dashed border-border hover:border-brand hover:bg-brand/5 transition-colors flex flex-col items-center justify-center gap-1 text-muted-foreground hover:text-brand"
                   >
                     <Upload className="w-5 h-5" />
-                    <span className="text-sm">Cliquez pour ajouter</span>
+                    <span className="text-sm">{t.addLogo}</span>
                   </button>
                 )}
               </div>
@@ -195,22 +284,22 @@ const Index = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                style={{ backgroundImage: "var(--gradient-brand)", boxShadow: "var(--shadow-glow)" }}
-                className="w-full h-12 text-base hover:opacity-90 transition-opacity text-brand-foreground border-0"
+                className="w-full h-12 text-base bg-brand text-brand-foreground hover:bg-brand/90 transition-colors shadow-[var(--shadow-glow)] border-0"
               >
-                {loading ? "Génération..." : "Générer le QR Code"}
+                <QrCode className="w-4 h-4 mr-2" />
+                {loading ? t.loading : t.submit}
               </Button>
             </form>
           </Card>
 
-          <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border/50 backdrop-blur-sm bg-card/80 flex flex-col items-center justify-center min-h-[400px]">
+          <Card className="p-6 md:p-8 shadow-[var(--shadow-card)] border-border flex flex-col items-center justify-center min-h-[400px]">
             {qrDataUrl ? (
               <div className="w-full space-y-4 animate-in fade-in zoom-in-95 duration-500">
-                <div className="rounded-xl overflow-hidden bg-white p-2 shadow-lg">
-                  <img src={qrDataUrl} alt="QR Code généré" className="w-full h-auto" />
+                <div className="rounded-xl overflow-hidden bg-white p-2 border">
+                  <img src={qrDataUrl} alt="QR Code" className="w-full h-auto" />
                 </div>
                 <Button onClick={downloadQR} variant="outline" className="w-full h-12">
-                  <Download className="w-4 h-4 mr-2" /> Télécharger PNG
+                  <Download className="w-4 h-4 mr-2" /> {t.download}
                 </Button>
               </div>
             ) : (
@@ -218,7 +307,7 @@ const Index = () => {
                 <div className="w-20 h-20 mx-auto rounded-2xl bg-muted/50 flex items-center justify-center">
                   <ImageIcon className="w-10 h-10 opacity-40" />
                 </div>
-                <p className="text-sm">Votre QR code apparaîtra ici</p>
+                <p className="text-sm">{t.placeholder}</p>
               </div>
             )}
           </Card>
