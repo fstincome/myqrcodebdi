@@ -89,6 +89,7 @@ const LANGS: { code: Lang; label: string }[] = [
 const Index = () => {
   const [lang, setLang] = useState<Lang>("fr");
   const t = translations[lang];
+  const { theme, toggle: toggleTheme } = useTheme();
 
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
@@ -184,11 +185,16 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <div className="container relative max-w-5xl py-6 md:py-10">
         {/* Top bar */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <img src={appLogo} alt="MY QRCODER" className="w-9 h-9 rounded-lg object-cover" />
-            <span className="font-bold text-lg tracking-tight">MY QRCODER</span>
-          </div>
+        <div className="flex items-center justify-end gap-2 mb-6">
+          <Button
+            onClick={toggleTheme}
+            variant="outline"
+            size="icon"
+            aria-label={theme === "dark" ? "Light mode" : "Dark mode"}
+            className="rounded-full"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </Button>
           <div className="inline-flex rounded-full border bg-card p-1 shadow-sm" role="group" aria-label={t.language}>
             {LANGS.map((l) => (
               <button
@@ -205,10 +211,6 @@ const Index = () => {
         </div>
 
         <header className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border shadow-sm mb-4">
-            <Sparkles className="w-4 h-4 text-brand" />
-            <span className="text-sm font-medium">{t.badge}</span>
-          </div>
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
             {t.title1} <span className="text-brand">{t.title2}</span>
           </h1>
