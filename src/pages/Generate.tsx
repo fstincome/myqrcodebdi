@@ -219,6 +219,7 @@ const Generate = () => {
               </button>
             ))}
           </div>
+          </div>
         </div>
 
         <header className="text-center mb-6">
