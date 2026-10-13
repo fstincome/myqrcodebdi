@@ -73,27 +73,33 @@ const Scan = () => {
 
   const isUrl = (v: string) => /^https?:\/\//i.test(v);
 
+  const stoppingRef = useRef(false);
+
   const start = async () => {
     try {
       if (!scannerRef.current) {
-        scannerRef.current = new Html5Qrcode(SCANNER_ID);
+        scannerRef.current = new Html5Qrcode(SCANNER_ID, { verbose: false });
       }
+      if (scannerRef.current.isScanning) return;
       await scannerRef.current.start(
         { facingMode: "environment" },
         { fps: 10, qrbox: { width: 250, height: 250 } },
         (decoded) => {
           setResult(decoded);
-          stop();
+          void stop();
         },
         () => {},
       );
       setScanning(true);
-    } catch (e) {
+    } catch {
       toast.error(tr.errCam);
+      setScanning(false);
     }
   };
 
   const stop = async () => {
+    if (stoppingRef.current) return;
+    stoppingRef.current = true;
     try {
       if (scannerRef.current && scannerRef.current.isScanning) {
         await scannerRef.current.stop();
@@ -102,6 +108,7 @@ const Scan = () => {
     } catch {
       /* noop */
     }
+    stoppingRef.current = false;
     setScanning(false);
   };
 
