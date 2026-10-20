@@ -107,7 +107,7 @@ const Scan = () => {
   return (
     <main className="min-h-screen bg-background">
       <div className="container max-w-3xl py-6 md:py-10">
-        <div className="flex items-center justify-between gap-2 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-6">
           <Button asChild variant="ghost" size="sm" className="rounded-full">
             <Link to="/"><ArrowLeft className="w-4 h-4 mr-1" /> {tr.home}</Link>
           </Button>
@@ -177,11 +177,11 @@ const Scan = () => {
               <div className="space-y-3 animate-in fade-in duration-300">
                 <div className="p-3 rounded-lg border bg-muted/30 text-sm break-all">{result}</div>
                 <div className="flex gap-2">
-                  <Button onClick={copy} variant="outline" className="flex-1">
+                    <Button onClick={copy} variant="outline" className="flex-1 min-w-0 h-auto min-h-10 whitespace-normal">
                     <Copy className="w-4 h-4 mr-2" /> {tr.copy}
                   </Button>
                   {isUrl(result) && (
-                    <Button asChild variant="outline" className="flex-1">
+                    <Button asChild variant="outline" className="flex-1 min-w-0 h-auto min-h-10 whitespace-normal">
                       <a href={result} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" /> {tr.open}
                       </a>
