@@ -65,7 +65,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Fungua kamera yako na soma QR code yoyote papo hapo.",
     free: "Bure",
     freeDesc: "Bila akaunti, bila mipaka: mrundu wa SIGHT unabaki wazi kwa wote.",
-    familyTitle: "Ulwndi wa SIGHT",
+    familyTitle: "Dunia ya SIGHT",
     familyDesc: "SIGHT LINK ni sehemu ya familia ya SIGHT, inayojenga miundomsingu ya kidijitali ya Burundi na Afrika Mashariki: programu za kudhibiti, vifaa na mafunzo.",
     core: "Usimamizi wa biashara: mauzo, bidhaa, fedha, wafanyakazi.",
     signal: "Mawasiliano na ishara za jukwaa.",
