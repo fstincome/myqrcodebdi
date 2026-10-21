@@ -1,7 +1,7 @@
 {
-  "name": "MY QRCODER",
-  "short_name": "MY QRCODER",
-  "description": "Générateur de QR codes personnalisés",
+  "name": "SIGHT LINK",
+  "short_name": "SIGHT LINK",
+  "description": "Générateur et lecteur de QR codes personnalisés",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,6 +1,8 @@
-# MY QRCODER
+# SIGHT LINK
 
-> Générateur de QR Code installable (PWA), multilingue (FR / EN / SW), avec logo personnalisé, légende, mode sombre et téléchargement PNG.
+> Membre de la famille SIGHT (CORE, BIZ, FAMILY, LORE, SIGNAL, LINK).
+>
+> Générateur et lecteur de QR Code installable (PWA), multilingue (FR / EN / SW), avec logo personnalisé, légende, mode sombre et téléchargement PNG.
 
 🔗 **Demo en ligne** : [myqrcodebdi.lovable.app](https://myqrcodebdi.lovable.app)
 
@@ -80,7 +82,7 @@ L'application est disponible sur [http://localhost:8080](http://localhost:8080).
 │   └── apple-touch-icon.png
 ├── src/
 │   ├── assets/
-│   │   └── logo.png         # Logo MY QRCODER
+│   │   └── logo.png         # Logo SIGHT LINK
 │   ├── components/
 │   │   ├── InstallPrompt.tsx  # Invite d'installation PWA
 │   │   └── ui/                # Composants shadcn/ui
