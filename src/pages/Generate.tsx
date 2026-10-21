@@ -34,7 +34,7 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Erreur lors de la génération",
     success: "QR code généré !",
     language: "Langue",
-    installLabel: "Installer MY QRCODER sur votre appareil",
+    installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
   },
   en: {
@@ -58,7 +58,7 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Error while generating",
     success: "QR code generated!",
     language: "Language",
-    installLabel: "Install MY QRCODER on your device",
+    installLabel: "Install SIGHT LINK on your device",
     installCta: "Install",
   },
   sw: {
@@ -82,7 +82,7 @@ const translations: Record<Lang, Record<string, string>> = {
     errGen: "Hitilafu wakati wa kutengeneza",
     success: "QR code imetengenezwa!",
     language: "Lugha",
-    installLabel: "Sakinisha MY QRCODER kwenye kifaa chako",
+    installLabel: "Sakinisha SIGHT LINK kwenye kifaa chako",
     installCta: "Sakinisha",
   },
 };
