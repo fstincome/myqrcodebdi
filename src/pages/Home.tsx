@@ -19,7 +19,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Utilisez votre caméra pour scanner un QR code",
     installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
-    aboutLink: "À propos de SIGHT LINK",
+    aboutLink: "À propos",
   },
   en: {
     title1: "Welcome to",
@@ -31,7 +31,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Use your camera to scan a QR code",
     installLabel: "Install SIGHT LINK on your device",
     installCta: "Install",
-    aboutLink: "About SIGHT LINK",
+    aboutLink: "About",
   },
   sw: {
     title1: "Karibu kwenye",
@@ -43,7 +43,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Tumia kamera yako kuchanganua QR code",
     installLabel: "Sakinisha SIGHT LINK kwenye kifaa chako",
     installCta: "Sakinisha",
-    aboutLink: "Kuhusu SIGHT LINK",
+    aboutLink: "Kuhusu",
   },
 };
 
@@ -61,7 +61,15 @@ const Home = () => {
   return (
     <main className="min-h-screen bg-background">
       <div className="container max-w-4xl py-6 md:py-10">
-        <div className="flex items-center justify-end gap-2 mb-8">
+        <div className="flex items-center justify-between gap-2 mb-8">
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
+          >
+            <Info className="w-4 h-4" />
+            {tr.aboutLink}
+          </Link>
+          <div className="flex items-center gap-2">
           <Button onClick={toggle} variant="outline" size="icon" className="rounded-full" aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </Button>
@@ -77,6 +85,7 @@ const Home = () => {
                 {l.label}
               </button>
             ))}
+          </div>
           </div>
         </div>
 
@@ -113,15 +122,6 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="text-center mt-8 pb-2">
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
-          >
-            <Info className="w-4 h-4" />
-            {tr.aboutLink}
-          </Link>
-        </div>
       </div>
       <InstallPrompt label={tr.installLabel} cta={tr.installCta} />
     </main>
