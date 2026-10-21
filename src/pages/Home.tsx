@@ -19,7 +19,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Utilisez votre caméra pour scanner un QR code",
     installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
-    aboutLink: "À propos de SIGHT LINK",
+    aboutLink: "À propos",
   },
   en: {
     title1: "Welcome to",
@@ -31,7 +31,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Use your camera to scan a QR code",
     installLabel: "Install SIGHT LINK on your device",
     installCta: "Install",
-    aboutLink: "About SIGHT LINK",
+    aboutLink: "About",
   },
   sw: {
     title1: "Karibu kwenye",
@@ -43,7 +43,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Tumia kamera yako kuchanganua QR code",
     installLabel: "Sakinisha SIGHT LINK kwenye kifaa chako",
     installCta: "Sakinisha",
-    aboutLink: "Kuhusu SIGHT LINK",
+    aboutLink: "Kuhusu",
   },
 };
 
