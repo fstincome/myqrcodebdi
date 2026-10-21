@@ -61,7 +61,15 @@ const Home = () => {
   return (
     <main className="min-h-screen bg-background">
       <div className="container max-w-4xl py-6 md:py-10">
-        <div className="flex items-center justify-end gap-2 mb-8">
+        <div className="flex items-center justify-between gap-2 mb-8">
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
+          >
+            <Info className="w-4 h-4" />
+            {tr.aboutLink}
+          </Link>
+          <div className="flex items-center gap-2">
           <Button onClick={toggle} variant="outline" size="icon" className="rounded-full" aria-label="Toggle theme">
             {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </Button>
