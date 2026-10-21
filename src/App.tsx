@@ -7,6 +7,7 @@ import Home from "./pages/Home.tsx";
 import Generate from "./pages/Generate.tsx";
 import Scan from "./pages/Scan.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import About from "./pages/About.tsx";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/generate" element={<Generate />} />
           <Route path="/scan" element={<Scan />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

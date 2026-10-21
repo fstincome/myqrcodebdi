@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { QrCode, ScanLine, Moon, Sun } from "lucide-react";
+import { QrCode, ScanLine, Moon, Sun, Info } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -19,6 +19,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Utilisez votre caméra pour scanner un QR code",
     installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
+    aboutLink: "À propos de SIGHT LINK",
   },
   en: {
     title1: "Welcome to",
@@ -30,6 +31,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Use your camera to scan a QR code",
     installLabel: "Install SIGHT LINK on your device",
     installCta: "Install",
+    aboutLink: "About SIGHT LINK",
   },
   sw: {
     title1: "Karibu kwenye",
@@ -41,6 +43,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Tumia kamera yako kuchanganua QR code",
     installLabel: "Sakinisha SIGHT LINK kwenye kifaa chako",
     installCta: "Sakinisha",
+    aboutLink: "Kuhusu SIGHT LINK",
   },
 };
 
@@ -107,6 +110,16 @@ const Home = () => {
                 <p className="text-sm text-muted-foreground">{tr.scanDesc}</p>
               </div>
             </Card>
+          </Link>
+        </div>
+
+        <div className="text-center mt-8 pb-2">
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
+          >
+            <Info className="w-4 h-4" />
+            {tr.aboutLink}
           </Link>
         </div>
       </div>
