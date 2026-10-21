@@ -19,6 +19,7 @@ const t: Record<Lang, Record<string, string>> = {
     scanDesc: "Utilisez votre caméra pour scanner un QR code",
     installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
+    aboutLink: "À propos de SIGHT LINK",
   },
   en: {
     title1: "Welcome to",
