@@ -86,6 +86,7 @@ const Home = () => {
               </button>
             ))}
           </div>
+          </div>
         </div>
 
         <header className="text-center mb-10 mt-4 md:mt-10">
@@ -121,15 +122,6 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="text-center mt-8 pb-2">
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
-          >
-            <Info className="w-4 h-4" />
-            {tr.aboutLink}
-          </Link>
-        </div>
       </div>
       <InstallPrompt label={tr.installLabel} cta={tr.installCta} />
     </main>
