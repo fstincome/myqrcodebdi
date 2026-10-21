@@ -7,6 +7,7 @@ import Home from "./pages/Home.tsx";
 import Generate from "./pages/Generate.tsx";
 import Scan from "./pages/Scan.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import About from "./pages/About.tsx";
 
 const queryClient = new QueryClient();
 
