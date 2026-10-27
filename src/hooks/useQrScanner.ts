@@ -14,7 +14,7 @@ function cameraError(error: unknown): CameraError {
   return "errCam";
 }
 
-export function useQrScanner(elementId: string) {
+export function useQrScanner(elementId: string, onDecoded?: (value: string) => void) {
   const [status, setStatus] = useState<ScannerStatus>("idle");
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<CameraError | null>(null);
@@ -23,6 +23,8 @@ export function useQrScanner(elementId: string) {
   const decodedRef = useRef(false);
   const startTaskRef = useRef<Promise<void> | null>(null);
   const stopTaskRef = useRef<Promise<void> | null>(null);
+  const onDecodedRef = useRef(onDecoded);
+  onDecodedRef.current = onDecoded;
 
   const stop = useCallback((): Promise<void> => {
     if (stopTaskRef.current) return stopTaskRef.current;
@@ -79,6 +81,7 @@ export function useQrScanner(elementId: string) {
             decodedRef.current = true;
             setResult(decoded);
             void stop();
+            onDecodedRef.current?.(decoded);
           },
           () => {},
         );
