@@ -15,6 +15,13 @@
       "when": 1793176042310,
       "tag": "0001_grant_qr_history_and_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793176063089,
+      "tag": "0002_grant_admin_role_advaxen",
+      "breakpoints": true
     }
   ]
 }
