@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,6 +6,8 @@ import { ArrowLeft, Camera, CameraOff, Copy, ExternalLink, Loader2, Moon, Sun, S
 import { toast } from "sonner";
 import { useTheme } from "@/hooks/useTheme";
 import { useQrScanner } from "@/hooks/useQrScanner";
+import { useQrHistoryRecorder } from "@/hooks/useQrHistoryRecorder";
+import { HistorySaveStatus } from "@/components/HistorySaveStatus";
 
 type Lang = "fr" | "en" | "sw";
 
@@ -89,8 +91,13 @@ const Scan = () => {
   const { theme, toggle } = useTheme();
 
   const { status, result, error, start, stop } = useQrScanner(SCANNER_ID);
+  const { record, saveStatus, retry: retrySave } = useQrHistoryRecorder();
   const scanning = status === "scanning";
   const busy = status === "starting" || status === "stopping";
+
+  useEffect(() => {
+    if (result) record(result, "scanned");
+  }, [result, record]);
 
   const isUrl = (v: string) => /^https?:\/\//i.test(v);
 
@@ -188,6 +195,7 @@ const Scan = () => {
                     </Button>
                   )}
                 </div>
+                <HistorySaveStatus status={saveStatus} retry={retrySave} lang={lang} />
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">{tr.placeholder}</p>
