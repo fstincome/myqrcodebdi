@@ -99,7 +99,7 @@ const History = () => {
       // RLS on user_roles limits rows to the signed-in user's own roles.
       const { data, error } = await supabase.from("user_roles").select("role").eq("role", "admin").limit(1);
       if (!mounted) return;
-      setIsAdmin(!error && data.length > 0);
+      setIsAdmin((data?.length ?? 0) > 0);
     })();
     return () => {
       mounted = false;
@@ -117,7 +117,6 @@ const History = () => {
     if (filter !== "all") query = query.eq("kind", filter);
     const from = (page - 1) * PAGE_SIZE;
     const { data, count, error } = await query.range(from, from + PAGE_SIZE - 1);
-    if (!mountedGuard) return;
     if (error) {
       setEvents([]);
       setTotal(0);
@@ -127,11 +126,7 @@ const History = () => {
       setTotal(count ?? 0);
     }
     setLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signedIn, isAdmin, filter, page]);
-
-  const mountedRef = { current: true };
-  const mountedGuard = mountedRef.current;
 
   useEffect(() => {
     void load();
