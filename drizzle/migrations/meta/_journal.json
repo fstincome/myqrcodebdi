@@ -8,6 +8,13 @@
       "when": 1793106460609,
       "tag": "0000_qr_history_and_admin_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793176042310,
+      "tag": "0001_grant_qr_history_and_roles",
+      "breakpoints": true
     }
   ]
 }
