@@ -8,6 +8,8 @@ import Generate from "./pages/Generate.tsx";
 import Scan from "./pages/Scan.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import About from "./pages/About.tsx";
+import History from "./pages/History.tsx";
+import ResetPassword from "./pages/ResetPassword.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/generate" element={<Generate />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/about" element={<About />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
