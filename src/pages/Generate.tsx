@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun, ArrowLeft } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
+import { useQrHistoryRecorder } from "@/hooks/useQrHistoryRecorder";
+import { HistorySaveStatus } from "@/components/HistorySaveStatus";
 
 type Lang = "fr" | "en" | "sw";
 
@@ -97,6 +99,7 @@ const Generate = () => {
   const [lang, setLang] = useState<Lang>("fr");
   const t = translations[lang];
   const { theme, toggle: toggleTheme } = useTheme();
+  const { record, saveStatus, retry: retrySave } = useQrHistoryRecorder();
 
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
@@ -172,6 +175,7 @@ const Generate = () => {
       }
 
       setQrDataUrl(canvas.toDataURL("image/png"));
+      record(url, "generated", caption);
       toast.success(t.success);
     } catch (err) {
       toast.error(t.errGen);
@@ -316,6 +320,7 @@ const Generate = () => {
                 <Button onClick={downloadQR} variant="outline" className="w-full h-12">
                   <Download className="w-4 h-4 mr-2" /> {t.download}
                 </Button>
+                <HistorySaveStatus status={saveStatus} retry={retrySave} lang={lang} />
               </div>
             ) : (
               <div className="text-center text-muted-foreground space-y-3">
