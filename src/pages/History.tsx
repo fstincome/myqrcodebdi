@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { HistorySaveStatus } from "@/components/HistorySaveStatus";
+import { HistoryStatistics } from "@/components/HistoryStatistics";
+import { HISTORY_STATISTICS_KEY } from "@/lib/history-statistics";
 import { historyTranslations, type HistoryLang } from "@/lib/history-translations";
 import { useTheme } from "@/hooks/useTheme";
 import {
@@ -45,6 +47,7 @@ const LANGS: { code: HistoryLang; label: string }[] = [
 ];
 
 const History = () => {
+  const queryClient = useQueryClient();
   const [lang, setLang] = useState<HistoryLang>("fr");
   const t = historyTranslations[lang];
   const { theme, toggle } = useTheme();
@@ -282,6 +285,7 @@ const History = () => {
           </Card>
         ) : (
           <>
+            <HistoryStatistics lang={lang} />
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
               <div className="inline-flex rounded-full border bg-card p-1 shadow-sm">
                 {([
@@ -308,7 +312,10 @@ const History = () => {
                   <LogOut className="w-4 h-4 mr-1" /> {t.logout}
                 </Button>
                 <Button
-                  onClick={() => void load()}
+                  onClick={() => {
+                    void load();
+                    void queryClient.invalidateQueries({ queryKey: HISTORY_STATISTICS_KEY });
+                  }}
                   variant="outline"
                   size="icon"
                   className="rounded-full"
