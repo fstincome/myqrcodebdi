@@ -2,6 +2,7 @@ export type HistoryLang = "fr" | "en" | "sw";
 export const historyTranslations = {
   fr: {
     history: "Historique", home: "Accueil", admin: "Connexion administrateur", email: "E-mail", password: "Mot de passe",
+    statistics: "Statistiques", allTime: "Toutes périodes", totalLinks: "Liens enregistrés", statsError: "Impossible de charger les statistiques.",
     login: "Se connecter", logout: "Se déconnecter", loginError: "Connexion impossible. Vérifiez vos identifiants.",
     forbidden: "Ce compte n’a pas accès à l’historique administrateur.", all: "Tous", scanned: "Scannés", generated: "Générés",
     empty: "Aucun lien enregistré", loadError: "Impossible de charger l’historique.", retry: "Réessayer", refresh: "Actualiser",
@@ -16,6 +17,7 @@ export const historyTranslations = {
   },
   en: {
     history: "History", home: "Home", admin: "Administrator sign-in", email: "Email", password: "Password",
+    statistics: "Statistics", allTime: "All time", totalLinks: "Saved links", statsError: "Unable to load statistics.",
     login: "Sign in", logout: "Sign out", loginError: "Unable to sign in. Check your credentials.",
     forbidden: "This account cannot access administrator history.", all: "All", scanned: "Scanned", generated: "Generated",
     empty: "No saved links", loadError: "Unable to load history.", retry: "Try again", refresh: "Refresh",
@@ -30,6 +32,7 @@ export const historyTranslations = {
   },
   sw: {
     history: "Historia", home: "Nyumbani", admin: "Ingia kama msimamizi", email: "Barua pepe", password: "Nenosiri",
+    statistics: "Takwimu", allTime: "Vipindi vyote", totalLinks: "Viungo vilivyohifadhiwa", statsError: "Imeshindwa kupakia takwimu.",
     login: "Ingia", logout: "Ondoka", loginError: "Imeshindwa kuingia. Hakikisha taarifa zako ni sahihi.",
     forbidden: "Akaunti hii haiwezi kufikia historia ya msimamizi.", all: "Zote", scanned: "Zilizochanganuliwa", generated: "Zilizotengenezwa",
     empty: "Hakuna viungo vilivyohifadhiwa", loadError: "Imeshindwa kupakia historia.", retry: "Jaribu tena", refresh: "Onyesha upya",
