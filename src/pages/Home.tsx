@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { QrCode, ScanLine, Moon, Sun, Info, History } from "lucide-react";
+import { QrCode, ScanLine, Moon, Sun, Info } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -20,7 +20,6 @@ const t: Record<Lang, Record<string, string>> = {
     installLabel: "Installer SIGHT LINK sur votre appareil",
     installCta: "Installer",
     aboutLink: "À propos",
-    historyLink: "Historique",
   },
   en: {
     title1: "Welcome to",
@@ -33,7 +32,6 @@ const t: Record<Lang, Record<string, string>> = {
     installLabel: "Install SIGHT LINK on your device",
     installCta: "Install",
     aboutLink: "About",
-    historyLink: "History",
   },
   sw: {
     title1: "Karibu kwenye",
@@ -46,7 +44,6 @@ const t: Record<Lang, Record<string, string>> = {
     installLabel: "Sakinisha SIGHT LINK kwenye kifaa chako",
     installCta: "Sakinisha",
     aboutLink: "Kuhusu",
-    historyLink: "Historia",
   },
 };
 
@@ -66,13 +63,6 @@ const Home = () => {
       <div className="container max-w-4xl py-6 md:py-10">
         <div className="flex items-center justify-between gap-2 mb-8">
           <div className="flex items-center gap-3">
-            <Link
-              to="/history"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
-            >
-              <History className="w-4 h-4" />
-              {tr.historyLink}
-            </Link>
             <Link
               to="/about"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-brand transition-colors"
