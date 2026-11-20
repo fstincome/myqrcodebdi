@@ -8,6 +8,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { useQrScanner } from "@/hooks/useQrScanner";
 import { useQrHistoryRecorder } from "@/hooks/useQrHistoryRecorder";
 import { HistorySaveStatus } from "@/components/HistorySaveStatus";
+import { readQrContent } from "@/lib/qr-content";
 
 type Lang = "fr" | "en" | "sw";
 
@@ -19,6 +20,7 @@ const t: Record<Lang, Record<string, string>> = {
     start: "Démarrer la caméra",
     stop: "Arrêter la caméra",
     result: "Résultat",
+    information: "Informations supplémentaires",
     copy: "Copier",
     open: "Ouvrir le lien",
     copied: "Copié dans le presse-papier !",
@@ -40,6 +42,7 @@ const t: Record<Lang, Record<string, string>> = {
     start: "Start camera",
     stop: "Stop camera",
     result: "Result",
+    information: "Additional information",
     copy: "Copy",
     open: "Open link",
     copied: "Copied to clipboard!",
@@ -61,6 +64,7 @@ const t: Record<Lang, Record<string, string>> = {
     start: "Anzisha kamera",
     stop: "Simamisha kamera",
     result: "Matokeo",
+    information: "Maelezo ya ziada",
     copy: "Nakili",
     open: "Fungua kiungo",
     copied: "Imenakiliwa!",
@@ -94,12 +98,14 @@ const Scan = () => {
   const { record, saveStatus, retry: retrySave } = useQrHistoryRecorder();
   const scanning = status === "scanning";
   const busy = status === "starting" || status === "stopping";
+  const content = result ? readQrContent(result) : null;
 
   useEffect(() => {
-    if (result) record(result, "scanned");
+    if (result) {
+      const decoded = readQrContent(result);
+      if (decoded.url) record(decoded.url, "scanned");
+    }
   }, [result, record]);
-
-  const isUrl = (v: string) => /^https?:\/\//i.test(v);
 
   const copy = async () => {
     if (!result) return;
@@ -182,14 +188,22 @@ const Scan = () => {
             <p className="text-sm font-medium">{tr.result}</p>
             {result ? (
               <div className="space-y-3 animate-in fade-in duration-300">
-                <div className="p-3 rounded-lg border bg-muted/30 text-sm break-all">{result}</div>
+                <div className="p-3 rounded-lg border bg-muted/30 text-sm space-y-3">
+                  <p className="break-all whitespace-pre-wrap">{content?.url ?? result}</p>
+                  {content?.description && (
+                    <div className="border-t border-border pt-3">
+                      <p className="font-medium mb-1">{tr.information}</p>
+                      <p className="whitespace-pre-wrap break-words text-muted-foreground">{content.description}</p>
+                    </div>
+                  )}
+                </div>
                 <div className="flex gap-2">
                     <Button onClick={copy} variant="outline" className="flex-1 min-w-0 h-auto min-h-10 whitespace-normal">
                     <Copy className="w-4 h-4 mr-2" /> {tr.copy}
                   </Button>
-                  {isUrl(result) && (
+                  {content?.url && (
                     <Button asChild variant="outline" className="flex-1 min-w-0 h-auto min-h-10 whitespace-normal">
-                      <a href={result} target="_blank" rel="noopener noreferrer">
+                      <a href={content.url} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="w-4 h-4 mr-2" /> {tr.open}
                       </a>
                     </Button>

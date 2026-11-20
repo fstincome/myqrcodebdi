@@ -4,6 +4,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useQrScanner } from "@/hooks/useQrScanner";
 import Scan from "@/pages/Scan";
 
+const history = vi.hoisted(() => ({ record: vi.fn() }));
+vi.mock("@/hooks/useQrHistoryRecorder", () => ({
+  useQrHistoryRecorder: () => ({ record: history.record, saveStatus: "idle", retry: vi.fn() }),
+}));
+
 const mock = vi.hoisted(() => ({ start: vi.fn(), stop: vi.fn(), clear: vi.fn(), instances: [] as MockScanner[] }));
 
 interface MockScanner {
@@ -37,6 +42,7 @@ vi.mock("html5-qrcode", () => ({
 
 beforeEach(() => {
   mock.instances.length = 0;
+  history.record.mockReset();
   mock.start.mockReset().mockImplementation(async (scanner: MockScanner) => { scanner.isScanning = true; });
   mock.stop.mockReset().mockResolvedValue(undefined);
   mock.clear.mockReset();
@@ -66,6 +72,16 @@ describe("QR scanner camera lifecycle", () => {
     expect(mock.start).toHaveBeenCalledOnce();
     await act(async () => { complete?.(); });
     expect(result.current.status).toBe("scanning");
+  });
+
+  it("keeps the website link openable and recorded when the QR contains business information", async () => {
+    render(<MemoryRouter><Scan /></MemoryRouter>);
+    fireEvent.click(screen.getByRole("button", { name: "Démarrer la caméra" }));
+    await waitFor(() => expect(mock.start).toHaveBeenCalledOnce());
+    await act(async () => { mock.instances[0]?.decoded?.("https://example.com/formulaire\n\nEntreprise Exemple\nDemandez un devis."); });
+    expect(screen.getByRole("link", { name: "Ouvrir le lien" })).toHaveAttribute("href", "https://example.com/formulaire");
+    expect(history.record).toHaveBeenCalledExactlyOnceWith("https://example.com/formulaire", "scanned");
+    await waitFor(() => expect(mock.stop).toHaveBeenCalledOnce());
   });
 
   it("fits the scan box inside a narrow mobile camera view", async () => {

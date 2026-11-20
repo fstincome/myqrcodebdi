@@ -8,3 +8,8 @@
 ## Statistiques de l’historique
 - [x] Ajouter un graphique circulaire et les totaux au-dessus de la liste privée.
 - [x] Vérifier les totaux globaux et l’affichage connecté sur grand et petit écran.
+
+## Informations dans les QR codes
+- [x] Ajouter une description facultative encodée avec le lien, distincte de la légende imprimée.
+- [x] Afficher les informations après un scan et garder le lien ouvrable et enregistré dans l’historique.
+- [x] Tester la génération et la lecture d’un QR code contenant un lien et une description.

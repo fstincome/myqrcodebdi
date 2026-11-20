@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import QRCode from "qrcode";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun, ArrowLeft } from "lucide-react";
+import { Download, Link2, Image as ImageIcon, Type, Upload, X, QrCode, Moon, Sun, ArrowLeft, FileText } from "lucide-react";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { useTheme } from "@/hooks/useTheme";
 import { useQrHistoryRecorder } from "@/hooks/useQrHistoryRecorder";
 import { HistorySaveStatus } from "@/components/HistorySaveStatus";
+import { createQrContent } from "@/lib/qr-content";
 
 type Lang = "fr" | "en" | "sw";
 
@@ -22,6 +24,9 @@ const translations: Record<Lang, Record<string, string>> = {
     subtitle: "Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.",
     link: "Lien",
     linkPlaceholder: "https://exemple.com",
+    description: "Informations supplémentaires (optionnel)",
+    descriptionPlaceholder: "Présentation de l’entreprise, détails du service ou du formulaire…",
+    information: "Informations supplémentaires",
     caption: "Légende (optionnel)",
     captionPlaceholder: "Mon site web",
     logo: "Logo (optionnel)",
@@ -46,6 +51,9 @@ const translations: Record<Lang, Record<string, string>> = {
     subtitle: "Turn any link into a custom QR code with your logo and a caption.",
     link: "Link",
     linkPlaceholder: "https://example.com",
+    description: "Additional information (optional)",
+    descriptionPlaceholder: "Company introduction, service or form details…",
+    information: "Additional information",
     caption: "Caption (optional)",
     captionPlaceholder: "My website",
     logo: "Logo (optional)",
@@ -70,6 +78,9 @@ const translations: Record<Lang, Record<string, string>> = {
     subtitle: "Geuza kiungo chochote kuwa QR code maalum na nembo yako na maelezo mafupi.",
     link: "Kiungo",
     linkPlaceholder: "https://mfano.com",
+    description: "Maelezo ya ziada (si lazima)",
+    descriptionPlaceholder: "Utambulisho wa kampuni, maelezo ya huduma au fomu…",
+    information: "Maelezo ya ziada",
     caption: "Maelezo (si lazima)",
     captionPlaceholder: "Tovuti yangu",
     logo: "Nembo (si lazima)",
@@ -103,8 +114,10 @@ const Generate = () => {
 
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
+  const [description, setDescription] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
+  const [generatedContent, setGeneratedContent] = useState<{ url: string; description: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -133,13 +146,14 @@ const Generate = () => {
       const canvas = document.createElement("canvas");
       canvas.width = size + padding * 2;
       canvas.height = size + padding * 2 + captionHeight;
-      const ctx = canvas.getContext("2d")!;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Canvas unavailable");
 
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const qrCanvas = document.createElement("canvas");
-      await QRCode.toCanvas(qrCanvas, url, {
+      await QRCode.toCanvas(qrCanvas, createQrContent(url, description), {
         width: size,
         margin: 1,
         errorCorrectionLevel: "H",
@@ -175,6 +189,7 @@ const Generate = () => {
       }
 
       setQrDataUrl(canvas.toDataURL("image/png"));
+      setGeneratedContent({ url: url.trim(), description: description.trim() });
       record(url, "generated", caption);
       toast.success(t.success);
     } catch (err) {
@@ -257,6 +272,19 @@ const Generate = () => {
               </div>
 
               <div className="space-y-2">
+                <Label htmlFor="description" className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" /> {t.description}
+                </Label>
+                <Textarea
+                  id="description"
+                  placeholder={t.descriptionPlaceholder}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="min-h-24 resize-y"
+                />
+              </div>
+
+              <div className="space-y-2">
                 <Label htmlFor="caption" className="flex items-center gap-2">
                   <Type className="w-4 h-4" /> {t.caption}
                 </Label>
@@ -317,6 +345,13 @@ const Generate = () => {
                 <div className="rounded-xl overflow-hidden bg-white p-2 border">
                   <img src={qrDataUrl} alt="QR Code" className="w-full h-auto" />
                 </div>
+                {generatedContent?.description && (
+                  <div className="space-y-2 border-t border-border pt-3 text-sm">
+                    <p className="font-medium flex items-center gap-2"><FileText className="h-4 w-4 shrink-0" />{t.information}</p>
+                    <p className="whitespace-pre-wrap break-words text-muted-foreground">{generatedContent.description}</p>
+                    <a href={generatedContent.url} target="_blank" rel="noopener noreferrer" className="block break-all text-brand underline underline-offset-4">{generatedContent.url}</a>
+                  </div>
+                )}
                 <Button onClick={downloadQR} variant="outline" className="w-full h-12">
                   <Download className="w-4 h-4 mr-2" /> {t.download}
                 </Button>
