@@ -2,6 +2,16 @@ import { describe, expect, it } from "vitest";
 import { createQrContent, readQrContent } from "@/lib/qr-content";
 
 describe("QR code information", () => {
+  it("creates a member card QR from information alone without requiring a link", () => {
+    const information = "Carte de membre\nNom : Aline\nNuméro : M-042";
+    expect(createQrContent("", information)).toBe(information);
+    expect(readQrContent(createQrContent("", information))).toEqual({ url: null, description: "", text: information });
+  });
+
+  it("returns no QR content if both the optional link and information are empty", () => {
+    expect(createQrContent("  ", "\n ")).toBe("");
+  });
+
   it("encodes a website or form link and its description inside the same QR content", () => {
     const url = "https://example.com/formulaire?service=inscription";
     const description = "Entreprise Exemple\nInscrivez-vous à notre formation.";

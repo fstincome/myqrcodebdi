@@ -10,6 +10,7 @@ export function isWebUrl(value: string): boolean {
 export function createQrContent(url: string, description: string): string {
   const link = url.trim();
   const information = description.trim();
+  if (!link) return information;
   return information ? `${link}\n\n${information}` : link;
 }
 

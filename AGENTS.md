@@ -6,4 +6,4 @@
 - Keep administrator roles in the protected user_roles table and enforce history reads with has_role in RLS; browser guards are presentation only.
 - Do not add profile tables unless user-facing profile data is requested; authentication and roles are independent of profiles.
 - Load history statistics using exact count-only queries under the existing administrator RLS, independently of list filters and pagination; this avoids partial totals and exposing history publicly.
-- Encode optional QR information as human-readable text with the HTTP(S) URL on the first line and the description after a blank line, using the shared qr-content helpers; the scanner opens and records only the validated URL, while retaining all text for display and copying.
+- Use shared qr-content helpers for human-readable QR content: information alone or an HTTP(S) URL followed by a blank line and optional information; reject empty content, and let the scanner open and record only a validated URL while displaying and copying all text.

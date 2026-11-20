@@ -21,11 +21,11 @@ const translations: Record<Lang, Record<string, string>> = {
     badge: "Générateur de QR Code",
     title1: "Créez votre",
     title2: "QR Code",
-    subtitle: "Transformez n'importe quel lien en QR code personnalisé avec votre logo et une légende.",
-    link: "Lien",
+    subtitle: "Carte de membre, informations ou lien : votre QR code personnalisé avec logo et légende.",
+    link: "Lien (optionnel)",
     linkPlaceholder: "https://exemple.com",
     description: "Informations supplémentaires (optionnel)",
-    descriptionPlaceholder: "Présentation de l’entreprise, détails du service ou du formulaire…",
+    descriptionPlaceholder: "Nom du membre, numéro de carte, présentation de l’entreprise…",
     information: "Informations supplémentaires",
     caption: "Légende (optionnel)",
     captionPlaceholder: "Mon site web",
@@ -36,7 +36,7 @@ const translations: Record<Lang, Record<string, string>> = {
     loading: "Génération...",
     download: "Télécharger PNG",
     placeholder: "Votre QR code apparaîtra ici",
-    errEmpty: "Veuillez entrer un lien",
+    errEmpty: "Veuillez saisir un lien ou des informations.",
     errImage: "Veuillez sélectionner une image",
     errGen: "Erreur lors de la génération",
     success: "QR code généré !",
@@ -48,11 +48,11 @@ const translations: Record<Lang, Record<string, string>> = {
     badge: "QR Code Generator",
     title1: "Create your",
     title2: "QR Code",
-    subtitle: "Turn any link into a custom QR code with your logo and a caption.",
-    link: "Link",
+    subtitle: "Member card, information or link: your custom QR code with a logo and caption.",
+    link: "Link (optional)",
     linkPlaceholder: "https://example.com",
     description: "Additional information (optional)",
-    descriptionPlaceholder: "Company introduction, service or form details…",
+    descriptionPlaceholder: "Member name, card number, company introduction…",
     information: "Additional information",
     caption: "Caption (optional)",
     captionPlaceholder: "My website",
@@ -63,7 +63,7 @@ const translations: Record<Lang, Record<string, string>> = {
     loading: "Generating...",
     download: "Download PNG",
     placeholder: "Your QR code will appear here",
-    errEmpty: "Please enter a link",
+    errEmpty: "Please enter a link or information.",
     errImage: "Please select an image",
     errGen: "Error while generating",
     success: "QR code generated!",
@@ -75,11 +75,11 @@ const translations: Record<Lang, Record<string, string>> = {
     badge: "Kitengeneza QR Code",
     title1: "Tengeneza",
     title2: "QR Code yako",
-    subtitle: "Geuza kiungo chochote kuwa QR code maalum na nembo yako na maelezo mafupi.",
-    link: "Kiungo",
+    subtitle: "Kadi ya uanachama, taarifa au kiungo: QR code yako yenye nembo na maelezo mafupi.",
+    link: "Kiungo (si lazima)",
     linkPlaceholder: "https://mfano.com",
     description: "Maelezo ya ziada (si lazima)",
-    descriptionPlaceholder: "Utambulisho wa kampuni, maelezo ya huduma au fomu…",
+    descriptionPlaceholder: "Jina la mwanachama, nambari ya kadi, utambulisho wa kampuni…",
     information: "Maelezo ya ziada",
     caption: "Maelezo (si lazima)",
     captionPlaceholder: "Tovuti yangu",
@@ -90,7 +90,7 @@ const translations: Record<Lang, Record<string, string>> = {
     loading: "Inatengeneza...",
     download: "Pakua PNG",
     placeholder: "QR code yako itaonekana hapa",
-    errEmpty: "Tafadhali ingiza kiungo",
+    errEmpty: "Tafadhali ingiza kiungo au taarifa.",
     errImage: "Tafadhali chagua picha",
     errGen: "Hitilafu wakati wa kutengeneza",
     success: "QR code imetengenezwa!",
@@ -134,7 +134,8 @@ const Generate = () => {
   };
 
   const generateQR = async () => {
-    if (!url.trim()) {
+    const content = createQrContent(url, description);
+    if (!content) {
       toast.error(t.errEmpty);
       return;
     }
@@ -153,7 +154,7 @@ const Generate = () => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const qrCanvas = document.createElement("canvas");
-      await QRCode.toCanvas(qrCanvas, createQrContent(url, description), {
+      await QRCode.toCanvas(qrCanvas, content, {
         width: size,
         margin: 1,
         errorCorrectionLevel: "H",
@@ -259,7 +260,7 @@ const Generate = () => {
             >
               <div className="space-y-2">
                 <Label htmlFor="url" className="flex items-center gap-2">
-                  <Link2 className="w-4 h-4" /> {t.link} <span className="text-destructive">*</span>
+                  <Link2 className="w-4 h-4" /> {t.link}
                 </Label>
                 <Input
                   id="url"
@@ -349,13 +350,13 @@ const Generate = () => {
                   <div className="space-y-2 border-t border-border pt-3 text-sm">
                     <p className="font-medium flex items-center gap-2"><FileText className="h-4 w-4 shrink-0" />{t.information}</p>
                     <p className="whitespace-pre-wrap break-words text-muted-foreground">{generatedContent.description}</p>
-                    <a href={generatedContent.url} target="_blank" rel="noopener noreferrer" className="block break-all text-brand underline underline-offset-4">{generatedContent.url}</a>
+                    {generatedContent.url && <a href={generatedContent.url} target="_blank" rel="noopener noreferrer" className="block break-all text-brand underline underline-offset-4">{generatedContent.url}</a>}
                   </div>
                 )}
                 <Button onClick={downloadQR} variant="outline" className="w-full h-12">
                   <Download className="w-4 h-4 mr-2" /> {t.download}
                 </Button>
-                <HistorySaveStatus status={saveStatus} retry={retrySave} lang={lang} />
+                {generatedContent?.url && <HistorySaveStatus status={saveStatus} retry={retrySave} lang={lang} />}
               </div>
             ) : (
               <div className="text-center text-muted-foreground space-y-3">
